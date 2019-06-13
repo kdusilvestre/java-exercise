@@ -1,0 +1,24 @@
+plugins {
+  id 'java'
+  id 'application'
+//  id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+repositories {
+  maven {
+    url "https://ci-repo.aexp.com/java-proxy/content/groups/prod/"
+  }
+}
+
+version = '3.7.0'
+sourceCompatibility = '1.8'
+
+dependencies {
+  compile "io.vertx:vertx-core:$version"
+  compile "io.vertx:vertx-web:$version"
+  compile "com.google.code.gson:gson:2.8.5"
+  compile "io.rest-assured:rest-assured:4.0.0"
+  compile "io.projectreactor:reactor-core:3.2.5.RELEASE"
+}
+
+mainClassName = 'io.vertx.example.HelloWorldEmbedded'
