@@ -5,9 +5,7 @@ plugins {
 }
 
 repositories {
-  maven {
-    url "https://ci-repo.aexp.com/java-proxy/content/groups/prod/"
-  }
+  mavenCentral()
 }
 
 version = '3.7.0'
