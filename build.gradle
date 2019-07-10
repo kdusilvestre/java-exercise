@@ -17,6 +17,7 @@ dependencies {
   compile "com.google.code.gson:gson:2.8.5"
   compile "io.rest-assured:rest-assured:4.0.0"
   compile "io.projectreactor:reactor-core:3.2.5.RELEASE"
+  compile "org.springframework:spring-core:5.1.8.RELEASE"
 }
 
 mainClassName = 'io.vertx.example.HelloWorldEmbedded'
