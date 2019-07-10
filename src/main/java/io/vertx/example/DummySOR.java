@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DummySOR {
 
   private static final String JSON_FILENAME = "characters.json";
@@ -18,16 +22,21 @@ public class DummySOR {
   /*
     Fake DB implementation.
    */
-  private FakeDB characters;
+  
+  FakeDB characters;
 
-  public DummySOR() {
-    loadData();
-  }
+ 
 
   public void addCharacter(JsonObject character) {
+
     // TODO: Task #3
     // Note: the solution is NOT to change characters.insert to characters.put ;)
     addCharacterBlocking(character);
+  }
+  
+  public Collection<JsonObject> getCharacters() {
+	  loadData();
+	  return characters.values();
   }
 
   private void loadData() {
@@ -39,14 +48,19 @@ public class DummySOR {
           .map(o -> (JsonObject)o)
           .collect(Collectors.toMap(j -> j.getString("characterName"), Function.identity(), (a, b) -> a, ConcurrentHashMap::new));
       characters = new FakeDB((ConcurrentHashMap<String, JsonObject>) temp);
+      
+      
+      
     } catch (IOException e) {
-      this.characters = new FakeDB();
+        e.printStackTrace();
     }
   }
 
   // The current implementation is a blocking operation.
   private void addCharacterBlocking(JsonObject character) {
-    characters.insert(character.getString("characterName"), character);
+	  System.out.println(character);
+	
+    characters.insert(character.getString("characterName"),character );
   }
 
   private File getFileFromRes(String fileName) {
