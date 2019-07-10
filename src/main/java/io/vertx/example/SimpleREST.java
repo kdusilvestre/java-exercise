@@ -9,12 +9,15 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class SimpleREST extends AbstractVerticle {
-
+	
   private StorageService storageService = new StorageService();
 
   @Override
@@ -37,7 +40,10 @@ public class SimpleREST extends AbstractVerticle {
       sendError(400, response);
     } else {
       storageService.add(characterJson);
-      response.end();
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+      
+
+      response.end("Added character "+characterJson.getString("characterName")+" on " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
     }
   }
 

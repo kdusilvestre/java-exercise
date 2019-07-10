@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -20,7 +21,15 @@ public class DummySOR {
    */
   private FakeDB characters;
 
-  public DummySOR() {
+  public FakeDB getCharacters() {
+	return characters;
+}
+
+public void setCharacters(FakeDB characters) {
+	this.characters = characters;
+}
+
+public DummySOR() {
     loadData();
   }
 
@@ -32,7 +41,8 @@ public class DummySOR {
 
   private void loadData() {
     try {
-      String fileContents = String.join("", Files.readAllLines(getFileFromRes(JSON_FILENAME).toPath()));
+      String fileContents = String.join("", Files.readAllLines(Paths.get("C:\\Users\\thana\\git\\java-exercise\\src\\main\\resources\\characters.json")));
+//    	 String fileContents = String.join("", Files.readAllLines(getFileFromRes(JSON_FILENAME).toPath()));
       Map<String, JsonObject> temp = new JsonObject(fileContents)
           .getJsonArray("characters")
           .stream()
@@ -45,6 +55,7 @@ public class DummySOR {
   }
 
   // The current implementation is a blocking operation.
+  
   private void addCharacterBlocking(JsonObject character) {
     characters.insert(character.getString("characterName"), character);
   }
