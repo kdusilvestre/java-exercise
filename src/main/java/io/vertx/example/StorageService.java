@@ -5,6 +5,9 @@ import io.vertx.core.json.JsonObject;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class StorageService {
 
   // Constants for the filtering task

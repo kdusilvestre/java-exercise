@@ -16,9 +16,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 public class SimpleREST extends AbstractVerticle {
 	
-  private StorageService storageService = new StorageService();
+	ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+	
+	  private StorageService storageService = context.getBean("storageService", StorageService.class);
+
+	  
+	  public StorageService getStorageService() {
+		return storageService;
+	}
+
+	public void setStorageService(StorageService storageService) {
+		this.storageService = storageService;
+	  }
 
   @Override
   public void start() {
