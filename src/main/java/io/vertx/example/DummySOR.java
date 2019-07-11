@@ -31,7 +31,7 @@ public class DummySOR {
   
   public DummySOR() {
 	  characters = new FakeDB();
-	  //Making sure to have hundred capacity elements to store.--Poorna
+	  //Making sure to have 10 capacity elements to store.--Poorna
 	  characters.newKeySet(10);
   }
 

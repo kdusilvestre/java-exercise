@@ -43,10 +43,10 @@ public class SimpleREST extends AbstractVerticle {
   public JsonArray getCharacters(@RequestParam(value = "name", required=false) final String name, 
 		  @RequestParam(value = "is_alive", required=false) final Boolean is_alive, 
 		  @RequestParam(value = "kill_count_range", required=false) final String kill_count_range) {
-	  Consumer<? super Entry<String, Object>> jsonArrayConsumer = null;
-	  Map<String,String> paramMap = new HashMap<String,String>();
+	Consumer<? super Entry<String, Object>> jsonArrayConsumer = null;
+	Map<String,String> paramMap = new HashMap<String,String>();
 	if(name!=null) {
-	  paramMap.put("name", name);
+		paramMap.put("name", name);
 	}else if(is_alive != null) {
 	  paramMap.put("is_alive", String.valueOf(is_alive));
 	}else if(kill_count_range!= null) {
