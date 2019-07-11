@@ -22,7 +22,6 @@ public class DummySOR {
   /*
     Fake DB implementation.
    */
-  
   FakeDB characters;
 
  
