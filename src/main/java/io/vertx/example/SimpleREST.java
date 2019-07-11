@@ -44,6 +44,13 @@ public class SimpleREST extends AbstractVerticle {
 
     vertx.createHttpServer().requestHandler(router).listen(8080);
   }
+  /**
+   * Get character based on filter 
+   * @param name the name
+   * @param is_alive the killed
+   * @param kill_count_range the killedBy
+   * @return jsonArray the jsonArray
+   */
   @GetMapping("/character")
   public JsonArray getCharacters(@RequestParam(value = "name", required=false) final String name, 
 		  @RequestParam(value = "is_alive", required=false) final Boolean is_alive, 
@@ -61,7 +68,10 @@ public class SimpleREST extends AbstractVerticle {
 	  return storageService.getAll(paramMap);
 
   }
-  
+  /**
+   * Insert the characters to Database
+   * @param jsonObject the jsonObject
+   */
   @PostMapping("/character")
   public void putCharacters(@RequestBody JsonObject jsonObject) {
 

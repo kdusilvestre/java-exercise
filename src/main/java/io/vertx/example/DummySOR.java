@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -18,6 +17,11 @@ import org.springframework.stereotype.Component;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
+/**
+ * DummySOR is being converted to a spring component 
+ * @author poornadevapathni
+ *
+ */
 @Component
 public class DummySOR {
 
@@ -35,27 +39,24 @@ public class DummySOR {
 	  characters.newKeySet(100);
   }
 
- 
-
   public void addCharacter(JsonObject character) throws IOException {
 	  
     // TODO: Task #3
     // Note: the solution is NOT to change characters.insert to characters.put ;)
-	  Date dt = new Date();
-      Long lg =	dt.getTime();
+	Date dt = new Date();
+    Long lg = dt.getTime();
       
     addCharacterBlocking(character);
     Date dt1 = new Date();
     Long lg1 =	dt1.getTime();
     
     taskCounter++;
-    Files.write(file.toPath(),("Task"+ taskCounter+"--->"+ String.valueOf(lg1-lg)+"\n").getBytes(), APPEND, CREATE);
+    Files.write(file.toPath(),("Task"+ taskCounter+"--->"+ String.valueOf(lg1-lg)+" seconds \n").getBytes(), APPEND, CREATE);
     
-    
-  }
+    }
   
   public Collection<JsonObject> getCharacters() {
-	  //loadData();
+	  loadData();
 	  return characters.values();
   }
 
@@ -67,10 +68,7 @@ public class DummySOR {
           .stream()
           .map(o -> (JsonObject)o)
           .collect(Collectors.toMap(j -> j.getString("characterName"), Function.identity(), (a, b) -> a, ConcurrentHashMap::new));
-      characters = new FakeDB((ConcurrentHashMap<String, JsonObject>) temp);
-      
-      
-      
+      characters.putAll(temp);
     } catch (IOException e) {
         e.printStackTrace();
     }
@@ -78,9 +76,7 @@ public class DummySOR {
 
   // The current implementation is a blocking operation.
   private void addCharacterBlocking(JsonObject character) {
-	  
-	
-    characters.insert(character.getString("characterName"),character );
+	  characters.insert(character.getString("characterName"),character );
   }
 
   private File getFileFromRes(String fileName) {

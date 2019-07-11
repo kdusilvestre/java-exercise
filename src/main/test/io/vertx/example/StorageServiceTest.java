@@ -2,7 +2,7 @@ package io.vertx.example;
 
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,26 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.mockito.Mockito;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
-import io.vertx.example.DummySOR;
-import io.vertx.example.FakeDB;
-import io.vertx.example.RandomCharacterGeneratorTest;
-import io.vertx.example.StorageService;
 
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.Mockito.when;
+import io.vertx.core.json.JsonObject;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 
@@ -40,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class StorageServiceTest {
 	JsonObject jsonObject ;
 
-	RandomCharacterGeneratorTest randomCharacterGenerator;
+	RandomCharacterGenerator randomCharacterGenerator;
 	@Autowired
 	private StorageService storageService ;
 	@InjectMocks
@@ -49,7 +36,7 @@ public class StorageServiceTest {
 	
 	@BeforeEach
 	public void init() {
-		randomCharacterGenerator = new RandomCharacterGeneratorTest();
+		randomCharacterGenerator = new RandomCharacterGenerator();
 		jsonObject =randomCharacterGenerator.generateRandomCharacter();
 		
 		//DummySOR dummySOR = Mockito.mock(DummySOR.class);
@@ -69,11 +56,6 @@ public class StorageServiceTest {
 		temp.put(jsonObject.getString("characterName"), jsonObject);
 		
 		when(fakeDB.values()).thenReturn(temp.values());
-		//when(dummySOR.getCharacters()).thenReturn(temp.values());
-		
-		
-		
-
 		assertNotNull(storageService.getAll(hashMap));
 		
 	}
@@ -105,11 +87,6 @@ public class StorageServiceTest {
 		temp.put(jsonObject.getString("characterName"), jsonObject);
 		
 		when(fakeDB.values()).thenReturn(temp.values());
-		//when(dummySOR.getCharacters()).thenReturn(temp.values());
-		
-		
-		//System.out.println(storageService.getAll(hashMap));
-
 		assertNotNull(storageService.getAll(hashMap));
 		
 	}
@@ -125,11 +102,6 @@ public class StorageServiceTest {
 		temp.put(jsonObject.getString("characterName"), jsonObject);
 		
 		when(fakeDB.values()).thenReturn(temp.values());
-		//when(dummySOR.getCharacters()).thenReturn(temp.values());
-		
-		
-		//System.out.println(storageService.getAll(hashMap));
-
 		assertNotNull(storageService.getAll(hashMap));
 		
 	}

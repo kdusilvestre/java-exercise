@@ -1,28 +1,14 @@
 package io.vertx.example;
 
-import io.vertx.core.buffer.Buffer;
-import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
-import io.vertx.core.parsetools.JsonParser;
-import io.vertx.core.streams.ReadStream;
-
-import java.awt.Desktop.Action;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 
 
 @Component
@@ -34,9 +20,6 @@ public class StorageService {
   @Autowired
 
   private DummySOR dummySOR;
-
-
-
   /*
     Returns array of characters according to given criteria.
    */
@@ -80,8 +63,9 @@ public class StorageService {
 
   }
 
-  /*
-    Adds a new character to the database
+  /**
+   * ADd the characters to database
+   * @param character the JSONObject
    */
   public void add(JsonObject character) {
 	  try {

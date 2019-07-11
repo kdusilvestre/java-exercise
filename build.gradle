@@ -8,7 +8,18 @@ plugins {
 repositories {
   mavenCentral()
 }
-
+sourceSets {
+    main {
+        java {
+            //srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/main/test'
+        }
+    }
+}
 version = '3.7.0'
 sourceCompatibility = '1.8'
 
@@ -24,17 +35,14 @@ dependencies {
   compile "org.springframework.boot:spring-boot-autoconfigure:2.0.9.RELEASE"
   compile "org.springframework.boot:spring-boot-starter-parent:2.0.9.RELEASE"
   compile "org.springframework.boot:spring-boot-dependencies:2.0.9.RELEASE"
-  
-  testCompile "org.springframework.boot:spring-boot-starter-test:2.0.9.RELEASE"
-
-  
-  testCompile 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
-  testCompile 'org.junit:junit:5.12'
-testCompile 'org.mockito:mockito-core:2.22.0'
+  compile "org.springframework.boot:spring-boot-starter-test:2.0.9.RELEASE"
+  compile 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+  compile 'org.mockito:mockito-junit-jupiter:2.23.0'
+  compile 'org.mockito:mockito-core:2.22.0'
 }
 test {
     useJUnitPlatform()
+    
 }
 mainClassName = 'io.vertx.example.JavaExerciseBoot'
 
