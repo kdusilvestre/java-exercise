@@ -36,7 +36,7 @@ public class DummySOR {
   public DummySOR() {
 	  characters = new FakeDB();
 	  //Making sure to have hundred capacity elements to store.--Poorna
-	  characters.newKeySet(100);
+	  characters.newKeySet(10);
   }
 
   public void addCharacter(JsonObject character) throws IOException {
@@ -51,7 +51,7 @@ public class DummySOR {
     Long lg1 =	dt1.getTime();
     
     taskCounter++;
-    Files.write(file.toPath(),("Task"+ taskCounter+"--->"+ String.valueOf(lg1-lg)+" seconds \n").getBytes(), APPEND, CREATE);
+    Files.write(file.toPath(),("Task"+ taskCounter+" added capacity--->"+ String.valueOf(lg1-lg)+" seconds \n").getBytes(), APPEND, CREATE);
     
     }
   
