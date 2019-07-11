@@ -22,19 +22,19 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.example.AppConfig;
-import io.vertx.example.RandomCharacterGenerator;
+
+import io.vertx.example.RandomCharacterGeneratorTest;
 import io.vertx.example.SimpleREST;
 import io.vertx.example.StorageService;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = AppConfig.class)
+
 public class SimpleRESTTest {
 	@Autowired
     private TestRestTemplate restTemplate;
 	
 	@Autowired
-	RandomCharacterGenerator randomCharacterGenerator;
+	RandomCharacterGeneratorTest randomCharacterGenerator;
 	
 	JsonObject jsonObject ;
 	

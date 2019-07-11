@@ -27,7 +27,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.example.DummySOR;
 import io.vertx.example.FakeDB;
-import io.vertx.example.RandomCharacterGenerator;
+import io.vertx.example.RandomCharacterGeneratorTest;
 import io.vertx.example.StorageService;
 
 import org.mockito.junit.MockitoJUnitRunner;
@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
 public class StorageServiceTest {
 	JsonObject jsonObject ;
 
-	RandomCharacterGenerator randomCharacterGenerator;
+	RandomCharacterGeneratorTest randomCharacterGenerator;
 	@Autowired
 	private StorageService storageService ;
 	@InjectMocks
@@ -49,8 +49,8 @@ public class StorageServiceTest {
 	
 	@BeforeEach
 	public void init() {
-		randomCharacterGenerator = new RandomCharacterGenerator();
-		JsonObject jsonObject =RandomCharacterGenerator.generateRandomCharacter();
+		randomCharacterGenerator = new RandomCharacterGeneratorTest();
+		jsonObject =randomCharacterGenerator.generateRandomCharacter();
 		
 		//DummySOR dummySOR = Mockito.mock(DummySOR.class);
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();
@@ -63,7 +63,6 @@ public class StorageServiceTest {
 	void getAllTest() {
 		Map<String,String> hashMap = new HashMap();
 		
-		JsonObject jsonObject =RandomCharacterGenerator.generateRandomCharacter();
 		
 		FakeDB fakeDB = Mockito.mock(FakeDB.class);
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();
@@ -83,8 +82,6 @@ public class StorageServiceTest {
 		Map<String,String> hashMap = new HashMap();
 		hashMap.put("name", "Marc Rissmann");
 		
-		JsonObject jsonObject =RandomCharacterGenerator.generateRandomCharacter();
-		
 		FakeDB fakeDB = Mockito.mock(FakeDB.class);
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();
 		temp.put(jsonObject.getString("characterName"), jsonObject);
@@ -102,8 +99,6 @@ public class StorageServiceTest {
 	void getAliveFilterTest() {
 		Map<String,String> hashMap = new HashMap();
 		hashMap.put("is_alive", "true");
-		
-		JsonObject jsonObject =RandomCharacterGenerator.generateRandomCharacter();
 		
 		FakeDB fakeDB = Mockito.mock(FakeDB.class);
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();
@@ -124,7 +119,6 @@ public class StorageServiceTest {
 		Map<String,String> hashMap = new HashMap();
 		hashMap.put("kill_count_range", "2,3");
 		
-		JsonObject jsonObject =RandomCharacterGenerator.generateRandomCharacter();
 		
 		FakeDB fakeDB = Mockito.mock(FakeDB.class);
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();

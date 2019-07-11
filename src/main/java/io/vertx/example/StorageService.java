@@ -8,6 +8,7 @@ import io.vertx.core.parsetools.JsonParser;
 import io.vertx.core.streams.ReadStream;
 
 import java.awt.Desktop.Action;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.Iterator;
@@ -83,8 +84,11 @@ public class StorageService {
     Adds a new character to the database
    */
   public void add(JsonObject character) {
-	  
+	  try {
     dummySOR.addCharacter(character);
+	  }catch(IOException exception) {
+		  exception.printStackTrace();
+	  }
   }
 
 }

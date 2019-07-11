@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -14,27 +16,46 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 @Component
 public class DummySOR {
 
   private static final String JSON_FILENAME = "characters.json";
-
+  private static final File file = new File("/Users/poornadevapathni/Documents/PerformanceTestResults.txt");
+  private static int taskCounter =0;
   /*
     Fake DB implementation.
    */
   FakeDB characters;
+  
+  public DummySOR() {
+	  characters = new FakeDB();
+	  //Making sure to have hundred capacity elements to store.--Poorna
+	  characters.newKeySet(100);
+  }
 
  
 
-  public void addCharacter(JsonObject character) {
-
+  public void addCharacter(JsonObject character) throws IOException {
+	  
     // TODO: Task #3
     // Note: the solution is NOT to change characters.insert to characters.put ;)
+	  Date dt = new Date();
+      Long lg =	dt.getTime();
+      
     addCharacterBlocking(character);
+    Date dt1 = new Date();
+    Long lg1 =	dt1.getTime();
+    
+    taskCounter++;
+    Files.write(file.toPath(),("Task"+ taskCounter+"--->"+ String.valueOf(lg1-lg)+"\n").getBytes(), APPEND, CREATE);
+    
+    
   }
   
   public Collection<JsonObject> getCharacters() {
-	  loadData();
+	  //loadData();
 	  return characters.values();
   }
 
@@ -57,7 +78,7 @@ public class DummySOR {
 
   // The current implementation is a blocking operation.
   private void addCharacterBlocking(JsonObject character) {
-	  System.out.println(character);
+	  
 	
     characters.insert(character.getString("characterName"),character );
   }
