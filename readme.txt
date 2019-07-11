@@ -2,7 +2,7 @@ Artifacts: SpringBoot
 URL
 get: /character
 post: /character
-Json Post Master:
+Json Post Man:
         {
             "map": {
                 "characterName": "Poorna1",
