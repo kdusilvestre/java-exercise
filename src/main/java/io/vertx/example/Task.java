@@ -1,11 +1,8 @@
 package io.vertx.example;
-
 import java.net.URI;
 import java.util.Date;
 import java.util.concurrent.Callable;
-
 import org.springframework.web.client.RestTemplate;
-
 public class Task  implements Callable<Result> {
 	private final String name;
 	 
@@ -26,5 +23,4 @@ public class Task  implements Callable<Result> {
 	   Long lg1 =	dt1.getTime();
        return new Result(this.name,lg1-lg );
     }
-
 }

@@ -1,6 +1,4 @@
 package io.vertx.example;
-
-
 import io.vertx.core.json.JsonObject;
 import java.io.File;
 import java.io.IOException;
@@ -12,9 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
-
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 /**
@@ -31,7 +27,7 @@ public class DummySOR {
   /*
     Fake DB implementation.
    */
-  FakeDB characters;
+  private FakeDB characters;
   
   public DummySOR() {
 	  characters = new FakeDB();
@@ -40,20 +36,16 @@ public class DummySOR {
   }
 
   public void addCharacter(JsonObject character) throws IOException {
-	  
-    // TODO: Task #3
+	// TODO: Task #3
     // Note: the solution is NOT to change characters.insert to characters.put ;)
 	Date dt = new Date();
     Long lg = dt.getTime();
-      
     addCharacterBlocking(character);
     Date dt1 = new Date();
     Long lg1 =	dt1.getTime();
-    
     taskCounter++;
     Files.write(file.toPath(),("Task"+ taskCounter+" added capacity--->"+ String.valueOf(lg1-lg)+" seconds \n").getBytes(), APPEND, CREATE);
-    
-    }
+  }
   
   public Collection<JsonObject> getCharacters() {
 	  loadData();
@@ -70,6 +62,7 @@ public class DummySOR {
           .collect(Collectors.toMap(j -> j.getString("characterName"), Function.identity(), (a, b) -> a, ConcurrentHashMap::new));
       characters.putAll(temp);
     } catch (IOException e) {
+    	this.characters = new FakeDB();
         e.printStackTrace();
     }
   }

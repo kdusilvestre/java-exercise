@@ -4,7 +4,6 @@ plugins {
   id 'org.springframework.boot' version '2.0.9.RELEASE'
 //  id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
-
 repositories {
   mavenCentral()
 }
@@ -22,8 +21,6 @@ sourceSets {
 }
 version = '3.7.0'
 sourceCompatibility = '1.8'
-
-
 dependencies {
   compile "io.vertx:vertx-core:$version"
   compile "io.vertx:vertx-web:$version"
@@ -35,14 +32,13 @@ dependencies {
   compile "org.springframework.boot:spring-boot-autoconfigure:2.0.9.RELEASE"
   compile "org.springframework.boot:spring-boot-starter-parent:2.0.9.RELEASE"
   compile "org.springframework.boot:spring-boot-dependencies:2.0.9.RELEASE"
-  compile "org.springframework.boot:spring-boot-starter-test:2.0.9.RELEASE"
-  compile 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-  compile 'org.mockito:mockito-junit-jupiter:2.23.0'
-  compile 'org.mockito:mockito-core:2.22.0'
+  testCompile "org.springframework.boot:spring-boot-starter-test:2.0.9.RELEASE"
+  testCompile 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+  testCompile 'org.mockito:mockito-junit-jupiter:2.23.0'
+  testCompile 'org.mockito:mockito-core:2.22.0'
 }
 test {
     useJUnitPlatform()
-    
 }
 mainClassName = 'io.vertx.example.JavaExerciseBoot'
 

@@ -1,10 +1,8 @@
 package io.vertx.example;
 
-
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

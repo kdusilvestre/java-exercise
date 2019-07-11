@@ -1,47 +1,35 @@
 package io.vertx.example;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.MultiMap;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.BodyHandler;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.MultiMap;
+import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
 @RestController
 public class SimpleREST extends AbstractVerticle {
-
-  
-
-  
   @Autowired
   private StorageService storageService;
 
   @Override
   public void start() {
     Router router = Router.router(vertx);
-
     router.route().handler(BodyHandler.create());
     router.get("/character").handler(this::handleFetchingCharacters);
     router.post("/character").handler(this::handleAddingCharacters);
-
     vertx.createHttpServer().requestHandler(router).listen(8080);
   }
   /**
@@ -65,8 +53,7 @@ public class SimpleREST extends AbstractVerticle {
 	  paramMap.put("kill_count_range", kill_count_range);
 	  
 	}
-	  return storageService.getAll(paramMap);
-
+	return storageService.getAll(paramMap);
   }
   /**
    * Insert the characters to Database
@@ -74,17 +61,13 @@ public class SimpleREST extends AbstractVerticle {
    */
   @PostMapping("/character")
   public void putCharacters(@RequestBody JsonObject jsonObject) {
-
-
-	  
 	  storageService.add(jsonObject);
   }
   private void handleAddingCharacters(RoutingContext routingContext) {
     HttpServerResponse response = routingContext.response();
-
     JsonObject characterJson = routingContext.getBodyAsJson();
-
-    if (characterJson == null || characterJson.isEmpty() || characterJson.getString("characterName") == null) {
+    if (characterJson == null || characterJson.isEmpty() || 
+    		characterJson.getString("characterName") == null) {
       sendError(400, response);
     } else {
       storageService.add(characterJson);
@@ -94,16 +77,12 @@ public class SimpleREST extends AbstractVerticle {
 
   // Responds with a JSON Array
   private void handleFetchingCharacters(RoutingContext routingContext) {
-
-    try {
+   try {
       MultiMap getParams = routingContext.request().params();
-
       Map<String, String> paramMap = getParams.entries()
               .stream()
               .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-
       JsonArray arr = storageService.getAll(paramMap);
-
       routingContext.response().putHeader("content-type", "application/json")
             .end(arr.encodePrettily());
     } catch (Exception e) {

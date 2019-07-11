@@ -4,19 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import io.vertx.core.json.JsonObject;
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(SpringExtension.class)
@@ -42,6 +38,4 @@ public class DummySORTest {
 
 		assertNotNull(dummySOR.getCharacters());
 	}
-	
-	
 }

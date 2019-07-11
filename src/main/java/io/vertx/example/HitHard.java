@@ -9,11 +9,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class HitHard {
-    
-    
 	public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
 		// TODO Auto-generated method stub
-		
 		ExecutorService executor = (ExecutorService) Executors.newFixedThreadPool(100);
 		List<Task> taskList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -22,20 +19,15 @@ public class HitHard {
         }
         //Execute all tasks and get reference to Future objects
         List<Future<Result>> resultList = null;
- 
         try {
             resultList = executor.invokeAll(taskList);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
- 
         executor.shutdown();
-        
         for(Future<Result> result : resultList){
         	System.out.println("future.get = " + result.get().toString());
-           
          }
-		
 	}
 
 }

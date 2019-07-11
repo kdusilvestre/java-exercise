@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
-
 import org.springframework.stereotype.Component;
-
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 @Component
