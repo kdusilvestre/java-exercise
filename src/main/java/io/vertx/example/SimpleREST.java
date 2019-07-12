@@ -45,14 +45,15 @@ public class SimpleREST extends AbstractVerticle {
 		  @RequestParam(value = "kill_count_range", required=false) final String kill_count_range) {
 	Consumer<? super Entry<String, Object>> jsonArrayConsumer = null;
 	Map<String,String> paramMap = new HashMap<String,String>();
-	if(name!=null) {
-		paramMap.put("name", name);
-	}else if(is_alive != null) {
-	  paramMap.put("is_alive", String.valueOf(is_alive));
-	}else if(kill_count_range!= null) {
-	  paramMap.put("kill_count_range", kill_count_range);
-	  
-	}
+		if(name!=null) {
+			paramMap.put("name", name);
+		}if(is_alive != null) {
+		  paramMap.put("is_alive", String.valueOf(is_alive));
+		 
+		}if(kill_count_range!= null) {
+			
+		  paramMap.put("kill_count_range", kill_count_range);
+		 }
 	return storageService.getAll(paramMap);
   }
   /**

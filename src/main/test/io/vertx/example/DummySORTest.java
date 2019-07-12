@@ -35,7 +35,6 @@ public class DummySORTest {
 		Map<String, JsonObject> temp = new ConcurrentHashMap<String, JsonObject>();
 		temp.put(jsonObject.getString("characterName"), jsonObject);
 		when(characters.values()).thenReturn(temp.values());
-
 		assertNotNull(dummySOR.getCharacters());
 	}
 }

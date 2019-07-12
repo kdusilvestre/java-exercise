@@ -6,7 +6,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,10 +31,12 @@ public class DummySOR {
    */
   private FakeDB characters;
   
+  private Set keySetConHashMap;
+  
   public DummySOR() {
-	  characters = new FakeDB();
-	  //Making sure to have 10 capacity elements to store.--Poorna
-	  characters.newKeySet(10);
+	 //ConcurrentHashMap<String ,JsonObject> mapcap = new ConcurrentHashMap<String,JsonObject>(100,0.90f,20);
+	 //characters = new FakeDB(mapcap);
+	 characters = new FakeDB();
   }
 
   public void addCharacter(JsonObject character) throws IOException {
@@ -44,7 +48,7 @@ public class DummySOR {
     Date dt1 = new Date();
     Long lg1 =	dt1.getTime();
     taskCounter++;
-    Files.write(file.toPath(),("Task"+ taskCounter+" added capacity--->"+ String.valueOf(lg1-lg)+" seconds \n").getBytes(), APPEND, CREATE);
+    Files.write(file.toPath(),("Task"+ taskCounter+" added capacity--->"+ String.valueOf(lg1-lg)+" milli seconds \n").getBytes(), APPEND, CREATE);
   }
   
   public Collection<JsonObject> getCharacters() {

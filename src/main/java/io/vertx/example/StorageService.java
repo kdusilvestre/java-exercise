@@ -1,12 +1,15 @@
 package io.vertx.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+;
 @Component
 public class StorageService {
 	// Constants for the filtering task
@@ -20,34 +23,55 @@ public class StorageService {
 	 */
   	public JsonArray getAll(Map<String, String> paramMap) {
   		JsonArray  jsonArray = new JsonArray();
+  		List<Boolean> isConditionSat = new ArrayList<>();
   		Collection<JsonObject> jsonObjectColl = dummySOR.getCharacters();
   		JsonArray jsonArrFilters = new JsonArray();
 		if(!paramMap.isEmpty()) {
-			jsonObjectColl.forEach(jsonObject -> {
-				boolean isConditionSat = false;
-					if( paramMap.get(CHARACTER_NAME_PARAMETER)!=null) {
-						if(jsonObject.getString("actorName")!=null &&  jsonObject.getString("actorName").equals(paramMap.get(CHARACTER_NAME_PARAMETER))) {
-							isConditionSat=true;
-						}
-					} if(paramMap.get(IS_DEAD_PARAMETER)!=null) {
+			jsonObjectColl.forEach(action -> {
+				isConditionSat.clear();
+				action.stream().forEach(jsonObject -> {
+					if( paramMap.get(CHARACTER_NAME_PARAMETER)!=null) 
+							
+							if(jsonObject != null && 
+							jsonObject.getKey().toString().equals("actorName")  &&  
+							jsonObject.getValue().toString().equals(paramMap.get(CHARACTER_NAME_PARAMETER))) {
+								isConditionSat.add(true);
+								
+					} 
 					
-						if(jsonObject.getJsonArray("killedBy") != null && jsonObject.getJsonArray("killedBy").isEmpty()) {
-							isConditionSat=true;
-						}
-					} if(paramMap.get(KILL_COUNT_PARAMETER)!=null) {
+					if(paramMap.get(IS_DEAD_PARAMETER)!=null && jsonObject != null && 
+							jsonObject.getKey().toString().equals("killedBy") &&
+							!(jsonObject.getValue() instanceof JsonArray)) {
+								isConditionSat.add(true);
+						
+					}if(paramMap.get(KILL_COUNT_PARAMETER)!=null && jsonObject != null && 
+							jsonObject.getKey().toString().equals("killed")) {
+						
 						String[] killCountRange = paramMap.get(KILL_COUNT_PARAMETER).split(",");
-						int size = jsonObject.getJsonArray("Killed")!=null ? jsonObject.getJsonArray("Killed").size() : 0;
-						if(killCountRange.length>=2 && size >= Integer.valueOf(killCountRange[0]) && size <=Integer.valueOf(killCountRange[1])) {
-							isConditionSat=true;
-						}
+						int killCountSize = killCountRange.length;
+						if(killCountSize >= Integer.parseInt("2")) {
+							int size = jsonObject.getValue().toString().split(",").length;
+								if(size >= Integer.valueOf(killCountRange[0])  && size <=Integer.valueOf(killCountRange[1])) {
+									isConditionSat.add(true);
+								}
+							}
 					}
-					if(isConditionSat)
-						jsonArrFilters.add(jsonObject);
-		 });
-	     return jsonArrFilters;
-	  }else {
+					if(isConditionSat.size() == paramMap.size()) {
+						jsonArrFilters.add(action);
+						
+					}
+					
+				});
+				
+					
+				
+			});
+	    return jsonArrFilters;
+	
+			
+		}else {
 		  jsonObjectColl.forEach(action -> jsonArray.add(action));
-	  }
+		}
 	  return jsonArray;
   }
 

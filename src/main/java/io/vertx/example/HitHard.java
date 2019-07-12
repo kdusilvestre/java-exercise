@@ -13,7 +13,7 @@ public class HitHard {
 		// TODO Auto-generated method stub
 		ExecutorService executor = (ExecutorService) Executors.newFixedThreadPool(100);
 		List<Task> taskList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             Task task = new Task("Task-" + i);
             taskList.add(task);
         }
