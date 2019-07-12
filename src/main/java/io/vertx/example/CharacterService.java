@@ -17,6 +17,8 @@ public class CharacterService {
 		
 	}
 	
+	// Accepts three filter value as parameter and filter is applied to character. response is filtered json array
+	
 	public JsonArray getCharacters(String nameVal,String aliveVal,String killCountVal )
 	{
 		for(Entry<String, JsonObject> map : dummySOR.getCharacters().entrySet()){
@@ -30,6 +32,7 @@ public class CharacterService {
 		
 	}
 	
+	// Accepts two filter value and filter name as parameter and filter is applied to character. response is filtered json array
 	public JsonArray getCharacters(String filterVal1,String filterval2,String filterkey1, String filterkey2 )
 	{
 		for(Entry<String, JsonObject> map : dummySOR.getCharacters().entrySet()){

@@ -1,6 +1,7 @@
 package io.vertx.example;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,14 +25,19 @@ public class HitHard implements Callable<InputStream> {
 	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 
 		File file = new File("PostOutput.txt");
-		file.createNewFile();
-		FileWriter writer = new FileWriter(file);
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+
+		long startTime = System.nanoTime();
 
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(20);
 
-		
 		List<Future<InputStream>> resultList = new ArrayList<>();
 
+		// to invoke the method parallel using executor frame work, non blocking call
 		for (int i = 0; i <= 100; i++) {
 
 			Future<InputStream> result = executor.submit(new HitHard());
@@ -39,6 +45,7 @@ public class HitHard implements Callable<InputStream> {
 			resultList.add(result);
 		}
 
+		// stream the response from the feature object and write to the file.
 		resultList.parallelStream().forEach(s -> {
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader((s.get())));
@@ -50,29 +57,35 @@ public class HitHard implements Callable<InputStream> {
 
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		});
 
+		long endTime = System.nanoTime();
+
+		long timeElapsed = endTime - startTime;
+
+		writer.write("Execution time in nanoseconds  : " + timeElapsed);
+
+		writer.write(System.lineSeparator());
+		writer.write("Execution time in milliseconds : " + timeElapsed / 1000000);
+		
+		System.out.println("Program is successfull test result are available in  PostOutput.txt");
+
 		try {
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			writer.close();
+			executor.shutdown();
+
 		}
-finally {
-	writer.close();
-	executor.shutdown();
-	
-}
 	}
 
 	@Override

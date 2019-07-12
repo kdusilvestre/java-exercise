@@ -25,16 +25,7 @@ public class SimpleREST extends AbstractVerticle {
 	ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 	
 	  private StorageService storageService = context.getBean("storageService", StorageService.class);
-
 	  
-	  public StorageService getStorageService() {
-		return storageService;
-	}
-
-	public void setStorageService(StorageService storageService) {
-		this.storageService = storageService;
-	  }
-
   @Override
   public void start() {
     Router router = Router.router(vertx);
